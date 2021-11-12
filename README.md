@@ -19,6 +19,8 @@ The purpose of the application is to manage Departments, Roles in the company, a
 When you start the application you are presented with the following options:  
 view all departments, view all roles, view all employees, add a department, add a role, add an employee, update an employee role, update the manager for an employee, delete employee, delete role, and delete department.
 
+You can view a quick demo video of it in aciton here: [https://youtu.be/fOS-62uyrvs](https://youtu.be/fOS-62uyrvs)
+
 I hope you enjoy using it as much as I enjoyed making it.
 
 ## Technology used<a href="technology"></a>
@@ -73,7 +75,11 @@ The database uses three tables, here is the schema:
 > PRIMARY KEY (`id`)
 > ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Employee Role'
 
-## Pictures (coming soon)
+## Pictures
+
+![Application Start Screen](./img/screenshot1.png)
+
+![Application in use](./img/screenshot2.png)
 
 ## Contributing<a href="contributing"></a>
 
