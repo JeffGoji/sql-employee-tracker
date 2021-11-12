@@ -33,16 +33,24 @@ const db = mysql.createConnection(
 
 db.connect((err) => {
   if (err) throw err;
-  console.log(`Connected to ${db}`);
+  console.log(`Connected to server`);
   beginPrompts();
 });
 
 // function after connection is established and welcome image shows
 beginPrompts = () => {
   console.log("**************************");
-  console.log("*                        *");
-  console.log("*   STARFLEET DATABASE   *");
-  console.log("*                        *");
+  console.log("*            *            *");
+  console.log("*           *  *          *");
+  console.log("*          *    *         *");
+  console.log("*         *      *        *");
+  console.log("*        *    **  *       *");
+  console.log("*       *   *    * *      *");
+  console.log("*       *  *      **      *");
+  console.log("*        **        *      *");
+  console.log("*                         *");
+  console.log("*   STARFLEET DATABASE    *");
+  console.log("*                         *");
   console.log("**************************", "\n");
   startPrompts();
 };
@@ -66,7 +74,7 @@ const startPrompts = () => {
           "Update a Manager",
           "View employees by Department",
           "Delete an Employee",
-          "Delete a role",
+          "Delete a Role",
           "Delete a department",
           "View Department Budgets",
           "Exit Screen",
@@ -215,65 +223,31 @@ addRole = () => {
     .prompt([
       {
         type: "input",
-        name: "role",
-        message: "What Role would you like to add?",
-        validate: (addRole) => {
-          if (addRole) {
-            return true;
-          } else {
-            console.log("Please Enter a Role");
-            return false;
-          }
-        },
+        message: "Enter the employee's title",
+        name: "roleTitle",
       },
       {
         type: "input",
-        name: "salary",
-        message: "What is the salary of this role?",
-        validate: (addSalary) => {
-          if (isNaN(addSalary)) {
-            return true;
-          } else {
-            console.log("Please Enter a Salary");
-            return false;
-          }
-        },
+        message: "Enter the employee's salary",
+        name: "roleSalary",
+      },
+      {
+        type: "input",
+        message: "Enter the employee's department ID",
+        name: "roleDept",
       },
     ])
-
-    .then((answer) => {
-      const params = [answer.role, answer.salary];
-
-      const roleSql = `SELECT name, id FROM department`;
-
-      db.query(roleSql, (err, data) => {
-        if (err) throw err;
-
-        const dept = data.map(({ name, id }) => ({ name: name, value: id }));
-
-        inquirer
-          .prompt([
-            {
-              type: `list`,
-              name: `dept`,
-              message: `What Department is this role in?`,
-              choices: `dept`,
-            },
-          ])
-
-          .then((deptChoice) => {
-            const dept = deptChoice.dept;
-            params.push(dept);
-
-            const sqlCommand = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
-
-            db.query(sqlCommand, params, (err, res) => {
-              if (err) throw err;
-              console.log(`Added ${answer.role} to the Roles`);
-
-              showRoles();
-            });
-          });
+    .then(function (res) {
+      const title = res.roleTitle;
+      const salary = res.roleSalary;
+      const departmentID = res.roleDept;
+      const query = `INSERT INTO role (title, salary, department_id) VALUES ("${title}", "${salary}", "${departmentID}")`;
+      db.query(query, (err, res) => {
+        if (err) {
+          throw err;
+        }
+        console.table(res);
+        viewallEmployees();
       });
     });
 };
@@ -533,5 +507,105 @@ JOIN department ON role.department_id = department.id GROUP BY  department_id`;
     console.table(rows);
 
     viewallEmployees();
+  });
+};
+
+//Delete Fucntions section ===========================
+// Delete an Employee
+const deleteEmployee = () => {
+  const employeeSql = `SELECT * FROM employee`;
+
+  db.query(employeeSql, (err, data) => {
+    if (err) throw err;
+
+    const employees = data.map(({ id, first_name, last_name }) => ({
+      name: first_name + " " + last_name,
+      value: id,
+    }));
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "name",
+          message: "Which employee would you like to delete?",
+          choices: employees,
+        },
+      ])
+      .then((empChoice) => {
+        const employee = empChoice.name;
+
+        const deleteEmp = `DELETE FROM employee WHERE id = ?`;
+
+        db.query(deleteEmp, employee, (err, res) => {
+          if (err) throw err;
+          console.log("Employee has been deleted");
+
+          viewallEmployees();
+        });
+      });
+  });
+};
+
+// Delete a role:
+deleteRole = () => {
+  const roleSql = "SELECT * FROM role";
+
+  db.query(roleSql, (err, data) => {
+    const role = data.map(({ title, id }) => ({ name: title, value: id }));
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "role",
+          message: "Which Role would you like to delete?",
+          choices: role,
+        },
+      ])
+
+      .then((roleChoice) => {
+        const role = roleChoice.role;
+        const sql = `DELETE FROM role WHERE id = ?`;
+
+        db.query(sql, role, (err, result) => {
+          if (err) throw err;
+          console.log("Deleted selected Role!");
+
+          showRoles();
+        });
+      });
+  });
+};
+
+// Delete a department:
+deleteDepartment = () => {
+  const deptSql = "SELECT * FROM department";
+
+  db.query(deptSql, (err, data) => {
+    const dept = data.map(({ name, id }) => ({ name: name, value: id }));
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "dept",
+          message: "What department will you delete?",
+          choices: dept,
+        },
+      ])
+
+      .then((deptChoice) => {
+        const dept = deptChoice.dept;
+        const sql = "DELETE FROM department WHERE id = ?";
+
+        db.query(sql, dept, (err, result) => {
+          if (err) throw err;
+          console.log("Deleted department.");
+
+          showDepartments();
+          beginPrompts();
+        });
+      });
   });
 };
