@@ -1,4 +1,4 @@
-SQL Employee Tracker App
+# SQL Employee Tracker App
 
 [![License:APACHE2.0](https://img.shields.io/badge/License-None-yellow.svg)](https://opensource.org/licenses/None)<a name="liscense"></a>
 
