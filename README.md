@@ -4,14 +4,15 @@
 
 ## Table of contents <a name="table"></a>
 
-- [Description](#description)
+- [Description](#Description)
 - [Technology Used](#Technology-used)
-- [Installation](#install)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Questions](#questions)
+- [Installation](#Installation)
+- - [Database](#Database)
+- [Pictures](#Pictures)
+- [Contributing](#Contributing)
+- [Questions](#Questions)
 
-## Description <a href="description"></a>
+## Description 
 
 This is my Employee Tracker SQL command line application loosely styled after Star Trek, because why not have a little fun with your personal projects?
 
@@ -31,7 +32,7 @@ I hope you enjoy using it as much as I enjoyed making it.
 - mysql2 \*
 - nodemon 2.0.15 (used briefly for testing)
 
-## Installation<a href="install"></a>
+## Installation
 
 You can start by downloading the program from this repository: [https://github.com/JeffGoji/sql-employee-tracker](https://github.com/JeffGoji/sql-employee-tracker).  
 Navigate to your folder you saved the file and run your command terminal and install the following:
@@ -85,7 +86,7 @@ The database uses three tables, here is the schema:
 
 Feel free to contact me about contributing to this project. :)
 
-## Questions <a name="questions"></a>
+## Questions
 
 If you have any questions about the repo, open an issue or contact me directly at jeff.lester@outlook.com.
 You can find more of my work at [https://github.com/jeffgoji](https://github.com/jeffgoji)
