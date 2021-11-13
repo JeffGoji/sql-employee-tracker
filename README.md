@@ -5,7 +5,7 @@
 ## Table of contents <a name="table"></a>
 
 - [Description](#description)
-- [Technology Used](#technology)
+- [Technology Used](#Technology-used)
 - [Installation](#install)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
@@ -23,7 +23,7 @@ You can view a quick demo video of it in aciton here: [https://youtu.be/fOS-62uy
 
 I hope you enjoy using it as much as I enjoyed making it.
 
-## Technology used<a href="technology"></a>
+## Technology used
 
 - console.table 0.10.0
 - express 4.17.1
